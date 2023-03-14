@@ -1,0 +1,22 @@
+# compose version 
+#
+
+services:
+  server:
+    image: server/test
+    ports:
+      - '5005:80'
+    networks:
+      - backend
+  
+  db:
+    image: postgres:15-alpine
+    environment: 
+    POSTGRES_USER: "postgres"
+    POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: pg_isready -h 127.0.0.1
